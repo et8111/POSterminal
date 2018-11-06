@@ -14,7 +14,11 @@ namespace POSterminal
             houses = BounceHouse.deSerialBounceHouse();
 
             GUI.MainSkeleton();
+            GUI.MainFilling(houses);
+            //Console.ReadLine();
+            //houses = houses.OrderBy(a => a.Price).ToList();
             //GUI.MainFilling(houses);
+
             Console.WriteLine(houses.Max(a => a.Name.Length));
             Console.WriteLine(houses.Max(a => a.Category.Length));
             Console.WriteLine(houses.Max(a => a.Price.ToString().Length));

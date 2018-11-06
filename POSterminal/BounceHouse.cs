@@ -15,6 +15,7 @@ namespace POSterminal
         public string Category { get; set; }
         public List<string> Description { get; set; }
         public double Price { get; set; }
+        public int Count { get; set; }
 
         public static List<BounceHouse> deSerialBounceHouse()
         {
