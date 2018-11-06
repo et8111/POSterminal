@@ -44,7 +44,9 @@ namespace POSterminal
             while (true)
                 {
                 if (flag)
+                {
                     AddDescription(houses.Select(a => a).Where(b => b.Name == Menu[index]).ToList());
+                }
                 Console.SetCursorPosition(left, top);
                 Console.ForegroundColor = back;
                 Console.BackgroundColor = yellow;
@@ -63,6 +65,12 @@ namespace POSterminal
                     top = (k.Key == ConsoleKey.DownArrow) ? top + 1 : top - 1; ;
                     index = (k.Key == ConsoleKey.DownArrow)?index+1: index-1;
                 }
+            }
+            Console.SetCursorPosition(2, 19);
+            for (int i = 0; i < 6; i++)
+            {
+                Console.CursorLeft = 2;
+                Console.WriteLine($"{" ".PadLeft(80, ' ')}");
             }
             Console.ForegroundColor = current;
             Console.BackgroundColor = back;
