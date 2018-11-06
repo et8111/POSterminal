@@ -13,17 +13,17 @@ namespace POSterminal
             GUI.Sorter = "NAME    ";
             List<BounceHouse> houses = new List<BounceHouse>();
             houses = BounceHouse.deSerialBounceHouse();
-            GUI g = new GUI();
-            g.Menu = new List<string>();
-            g.Menu = GUI.MenuMainLoadOut(g.Menu);
+            GUI.Menu = GUI.MenuMainLoadOut(GUI.Menu);
             GUI.MainSkeleton();
             houses = houses.OrderBy(a => a.Name).ToList();
+            GUI.MainFilling(houses, GUI.Menu);
+
 
             while (true)
             {
-                GUI.MainFilling(houses, g.Menu);
-                houses = GUI.ChangeSort(houses);
-                Console.ReadLine();
+                int temp = GUI.Selector(GUI.left, GUI.top, GUI.max, GUI.Menu, GUI.index);
+                if (temp == 2)
+                    GUI.ChangeSort(houses);
             }
         }
     }

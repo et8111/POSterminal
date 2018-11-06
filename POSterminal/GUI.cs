@@ -10,8 +10,60 @@ namespace POSterminal
     {
         public static double Total { get; set; }
         public static int Quantity { get; set; }
-        public List<string> Menu { get; set; }
+        public static List<string> Menu { get; set; } = new List<string>();
         public static string Sorter { get; set; }
+        public static int left { get; set; } = 2;
+        public static int top { get; set; } = 4;
+        public static int max { get; set; } = 3;
+        public static int index { get; set; } = 0;
+
+        public static int Selector(int left, int top, int max, List<string> Menu, int index)
+        {
+            ConsoleColor current = Console.ForegroundColor;
+            ConsoleColor yellow = ConsoleColor.Yellow;
+            ConsoleColor back = Console.BackgroundColor;
+            ConsoleKeyInfo k; 
+
+            while (true)
+                {
+                Console.SetCursorPosition(left, top);
+                Console.ForegroundColor = back;
+                Console.BackgroundColor = yellow;
+                if (index == 2)
+                    Console.Write(Menu[index] + Sorter.Replace(" ", ""));
+                else
+                    Console.Write(Menu[index]);
+                //Cursor.
+                k = Console.ReadKey(true);
+                Console.SetCursorPosition(left, top);
+                if (k.Key == ConsoleKey.Enter)
+                    break;
+                else if ((k.Key == ConsoleKey.UpArrow && index != 0) || (k.Key == ConsoleKey.DownArrow && index != max))
+                {
+                    if (index != 2)
+                    {
+                        Console.ForegroundColor = current;
+                        Console.BackgroundColor = back;
+                        Console.Write(Menu[index]);
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = current;
+                        Console.BackgroundColor = back;
+                        Console.Write(Menu[index] + Sorter.Replace(" ",""));
+                    }
+                    top = (k.Key == ConsoleKey.DownArrow) ? top + 1 : top - 1; ;
+                    index = (k.Key == ConsoleKey.DownArrow)?index+1: index-1;
+                }
+            }
+            Console.ForegroundColor = current;
+            Console.BackgroundColor = back;
+            GUI.left = left;
+            GUI.top = top;
+            GUI.index = index;
+            GUI.max = max;
+            return index;
+        }
 
         public static void MainSkeleton()
         {
@@ -34,17 +86,17 @@ namespace POSterminal
             Console.SetCursorPosition(22, 3);
             Console.Write("-".PadLeft(58, '-'));
             Console.SetCursorPosition(22,17);
-            Console.Write($"{"QUANTITY: 99",-41}{"TOTAL: $99,999.99"}");
+            Console.Write($"{"QUANTITY:  0",-41}{"TOTAL: $0.00"}");
             Console.SetCursorPosition(0, 26);
         }
-        public static void MainFilling(List<BounceHouse> list, List<string> menu)//MENU(1,4) | ListName(22,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
+        public static void MainFilling(List<BounceHouse> list, List<string> menu)//MENU(2,4) | ListName(22,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
         {
             Console.SetCursorPosition(2, 4);
             ;
             for (int i = 0; i < menu.Count; i++)
             {
                 if (menu[i] == "SORT:")
-                    Console.WriteLine(menu[i] + " " + Sorter);
+                    Console.WriteLine(menu[i]+Sorter);
                 else
                     Console.WriteLine(menu[i]);
                 Console.CursorLeft = 2;
@@ -60,24 +112,28 @@ namespace POSterminal
             Console.SetCursorPosition(0, 26);
         }
 
-        public static List<BounceHouse> ChangeSort(List<BounceHouse> houses)
+        public static void ChangeSort(List<BounceHouse> houses)
         {
             switch (Sorter)
             {
                 case "NAME    ":
                     Sorter = "CATEGORY";
-                    return houses.OrderBy(a => a.Category).ToList();
+                    houses =  houses.OrderBy(a => a.Category).ToList();
+                    break;
                 case "CATEGORY":
                     Sorter = "PRICE   ";
-                    return houses.OrderBy(a => a.Price).ToList();
+                    houses =  houses.OrderBy(a => a.Price).ToList();
+                    break;
                 case "PRICE   ":
                     Sorter = "COUNT   ";
-                    return houses.OrderBy(a => a.Count).ToList();
+                    houses =  houses.OrderBy(a => a.Count).ToList();
+                    break;
                 case "COUNT   ":
                     Sorter = "NAME    ";
-                    return houses.OrderBy(a => a.Name).ToList();
+                    houses = houses.OrderBy(a => a.Name).ToList();
+                    break;
             }
-            return houses;
+            MainFilling(houses, Menu);
         }
 
         public static List<string> MenuMainLoadOut(List<string> Menu)
