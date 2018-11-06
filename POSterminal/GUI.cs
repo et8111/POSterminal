@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace POSterminal
 {
-    static class GUI
+    class GUI
     {
         public static double Total { get; set; }
         public static int Quantity { get; set; }
+        public List<string> Menu { get; set; }
+        public static string Sorter { get; set; }
+
         public static void MainSkeleton()
         {
             char fill = (char)247;
@@ -34,17 +37,66 @@ namespace POSterminal
             Console.Write($"{"QUANTITY: 99",-41}{"TOTAL: $99,999.99"}");
             Console.SetCursorPosition(0, 26);
         }
-        public static void MainFilling(List<BounceHouse> list)//MENU(1,4) | ListName(22,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
+        public static void MainFilling(List<BounceHouse> list, List<string> menu)//MENU(1,4) | ListName(22,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
         {
+            Console.SetCursorPosition(2, 4);
+            ;
+            for (int i = 0; i < menu.Count; i++)
+            {
+                if (menu[i] == "SORT:")
+                    Console.WriteLine(menu[i] + " " + Sorter);
+                else
+                    Console.WriteLine(menu[i]);
+                Console.CursorLeft = 2;
+            }
+
             Console.SetCursorPosition(22, 4);
             for(int i = 0; i < list.Count; i++)
             {
-                Console.Write($"{list[i].Count+")",-3}{list[i].Name.PadRight(30, '.')}{list[i].Category.PadLeft(11,'.')}{list[i].Price.ToString("C2").PadLeft(14,' ')}");
-                Console.CursorTop++;
+                Console.WriteLine($"{list[i].Count+")",-3}{list[i].Name.PadRight(30, '.')}{list[i].Category.PadLeft(11,'.')}{list[i].Price.ToString("C2").PadLeft(14,' ')}");
                 Console.CursorLeft = 22;
             }
 
             Console.SetCursorPosition(0, 26);
+        }
+
+        public static List<BounceHouse> ChangeSort(List<BounceHouse> houses)
+        {
+            switch (Sorter)
+            {
+                case "NAME    ":
+                    Sorter = "CATEGORY";
+                    return houses.OrderBy(a => a.Category).ToList();
+                case "CATEGORY":
+                    Sorter = "PRICE   ";
+                    return houses.OrderBy(a => a.Price).ToList();
+                case "PRICE   ":
+                    Sorter = "COUNT   ";
+                    return houses.OrderBy(a => a.Count).ToList();
+                case "COUNT   ":
+                    Sorter = "NAME    ";
+                    return houses.OrderBy(a => a.Name).ToList();
+            }
+            return houses;
+        }
+
+        public static List<string> MenuMainLoadOut(List<string> Menu)
+        {
+            Menu.Clear();
+            Menu.Add("ADD");
+            Menu.Add("REMOVE");
+            Menu.Add("SORT:");
+            Menu.Add("CART");
+            return Menu;
+        }
+        public static List<string> MenuCartLoadOut(List<string> Menu)
+        {
+            Menu.Clear();
+            Menu.Add("ADD");
+            Menu.Add("REMOVE");
+            Menu.Add("SORT:");
+            Menu.Add("CHECKOUT");
+            return Menu;
         }
     }
 }

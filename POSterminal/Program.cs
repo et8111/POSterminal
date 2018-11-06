@@ -10,18 +10,21 @@ namespace POSterminal
     {
         static void Main(string[] args)
         {
+            GUI.Sorter = "NAME    ";
             List<BounceHouse> houses = new List<BounceHouse>();
             houses = BounceHouse.deSerialBounceHouse();
-
+            GUI g = new GUI();
+            g.Menu = new List<string>();
+            g.Menu = GUI.MenuMainLoadOut(g.Menu);
             GUI.MainSkeleton();
-            GUI.MainFilling(houses);
-            //Console.ReadLine();
-            //houses = houses.OrderBy(a => a.Price).ToList();
-            //GUI.MainFilling(houses);
+            houses = houses.OrderBy(a => a.Name).ToList();
 
-            Console.WriteLine(houses.Max(a => a.Name.Length));
-            Console.WriteLine(houses.Max(a => a.Category.Length));
-            Console.WriteLine(houses.Max(a => a.Price.ToString().Length));
+            while (true)
+            {
+                GUI.MainFilling(houses, g.Menu);
+                houses = GUI.ChangeSort(houses);
+                Console.ReadLine();
+            }
         }
     }
 }
