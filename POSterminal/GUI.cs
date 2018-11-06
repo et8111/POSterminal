@@ -34,7 +34,7 @@ namespace POSterminal
             }
         }
 
-        public static int Selector(int left, int top, int max, List<string> Menu, int index, bool flag, List<BounceHouse> houses)
+        public static int Selector(int left, int top, int max, List<string> name, int index, bool flag, List<BounceHouse> houses)
         {
             ConsoleColor current = Console.ForegroundColor;
             ConsoleColor yellow = ConsoleColor.Yellow;
@@ -45,12 +45,13 @@ namespace POSterminal
                 {
                 if (flag)
                 {
-                    AddDescription(houses.Select(a => a).Where(b => b.Name == Menu[index]).ToList());
+                    MainFilling(houses, GUI.Menu);
+                    AddDescription(houses.Select(a => a).Where(b => b.Name == name[index]).ToList());
                 }
                 Console.SetCursorPosition(left, top);
                 Console.ForegroundColor = back;
                 Console.BackgroundColor = yellow;
-                Console.Write(Menu[index]);
+                Console.Write(name[index]);
 
                 Console.ForegroundColor = current;
                 Console.BackgroundColor = back;
@@ -61,7 +62,7 @@ namespace POSterminal
                 else if ((k.Key == ConsoleKey.UpArrow && index != 0) || (k.Key == ConsoleKey.DownArrow && index != max))
                 {
  
-                    Console.Write(Menu[index]);
+                    Console.Write(name[index]);
                     top = (k.Key == ConsoleKey.DownArrow) ? top + 1 : top - 1; ;
                     index = (k.Key == ConsoleKey.DownArrow)?index+1: index-1;
                 }
@@ -163,8 +164,8 @@ namespace POSterminal
         public static List<string> MenuCartLoadOut(List<string> Menu)
         {
             Menu.Clear();
-            Menu.Add("ADD");
-            Menu.Add("REMOVE");
+            Menu.Add("BACK");
+            Menu.Add("INFO");
             Menu.Add(Sorter);
             Menu.Add("CHECKOUT");
             return Menu;
