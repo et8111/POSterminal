@@ -17,12 +17,24 @@ namespace POSterminal
         public static int max { get; set; } = 3;
         public static int index { get; set; } = 0;
 
-        public static void Adder(List<BounceHouse> houses)
+        public static void AddDescription(List<BounceHouse> houses)
         {
-
+            Console.SetCursorPosition(2, 19);
+            for (int i = 0; i < 6; i++)
+            {
+                Console.CursorLeft = 2;
+                Console.WriteLine($"{" ".PadLeft(80, ' ')}");
+            }
+            Console.SetCursorPosition(2, 19);
+            Console.WriteLine($"{houses[0].Name + " "+ houses[0].SecondName, -55}{"CATEGROY: " + houses[0].Category, -21}\n");
+            for (int i = 0; i < houses[0].Description.Count; i++)
+            {
+                Console.CursorLeft = 2;
+                Console.WriteLine(houses[0].Description[i]);
+            }
         }
 
-        public static int Selector(int left, int top, int max, List<string> Menu, int index)
+        public static int Selector(int left, int top, int max, List<string> Menu, int index, bool flag, List<BounceHouse> houses)
         {
             ConsoleColor current = Console.ForegroundColor;
             ConsoleColor yellow = ConsoleColor.Yellow;
@@ -31,19 +43,22 @@ namespace POSterminal
 
             while (true)
                 {
+                if (flag)
+                    AddDescription(houses.Select(a => a).Where(b => b.Name == Menu[index]).ToList());
                 Console.SetCursorPosition(left, top);
                 Console.ForegroundColor = back;
                 Console.BackgroundColor = yellow;
                 Console.Write(Menu[index]);
-                //Cursor.
+
+                Console.ForegroundColor = current;
+                Console.BackgroundColor = back;
                 k = Console.ReadKey(true);
                 Console.SetCursorPosition(left, top);
                 if (k.Key == ConsoleKey.Enter)
                     break;
                 else if ((k.Key == ConsoleKey.UpArrow && index != 0) || (k.Key == ConsoleKey.DownArrow && index != max))
                 {
-                    Console.ForegroundColor = current;
-                    Console.BackgroundColor = back;
+ 
                     Console.Write(Menu[index]);
                     top = (k.Key == ConsoleKey.DownArrow) ? top + 1 : top - 1; ;
                     index = (k.Key == ConsoleKey.DownArrow)?index+1: index-1;

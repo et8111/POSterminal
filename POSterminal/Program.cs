@@ -22,24 +22,27 @@ namespace POSterminal
 
             while (true)
             {
-                int temp = GUI.Selector(GUI.left, GUI.top, GUI.Menu.Count-1, GUI.Menu, GUI.index);
+                int temp = GUI.Selector(GUI.left, GUI.top, GUI.Menu.Count-1, GUI.Menu, GUI.index, false, houses);
                 if (temp == 0)
                 {
-                    temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0);
+                    temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count++;
                     GUI.MainFilling(houses, GUI.Menu);
                     GUI.left = 2; GUI.top = 4;GUI.index = 0;
+                    continue;
                 }
                 if (temp == 1)
                 {
-                    temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0);
+                    temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count = (houses[temp].Count>0)?houses[temp].Count-1:houses[temp].Count;
                     GUI.MainFilling(houses, GUI.Menu);
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
+                    continue;
                 }
                 if (temp == 2)
                 {
                     GUI.ChangeSort(ref houses);
+                    continue;
                 }
             }
         }
