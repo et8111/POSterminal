@@ -16,9 +16,9 @@ namespace POSterminal
             List<BounceHouse> houses = new List<BounceHouse>();
             houses = BounceHouse.deSerialBounceHouse();
             GUI.Menu = GUI.MenuMainLoadOut(GUI.Menu);
-            GUI.MainSkeleton();
+            //GUI.MainSkeleton();
+            //GUI.MainFilling(houses, GUI.Menu, true);
             houses = houses.OrderBy(a => a.Name).ToList();
-            GUI.MainFilling(houses, GUI.Menu, true);
             program(houses, false,ref FinalFlag);
         }
 
@@ -32,6 +32,7 @@ namespace POSterminal
             int temp = GUI.Selector(GUI.left = 2, GUI.top = 4, GUI.Menu.Count - 1, GUI.Menu, 0, false, list);
             if (temp == 0)
             {
+                GUI.Total = list.Select(a => a.Price + (a.Price * .06)).Sum();
                 return temp;
             }
             else if (temp == 1)
@@ -69,6 +70,12 @@ namespace POSterminal
                 for (int i = 0; i < list.Count; i++)
                     list[i].Count = 0;
             }
+            Console.Clear();
+            Console.WriteLine("OUT reciept has been printed!");
+            Console.WriteLine("Press enter to restart, or any key to exit...");
+            if (Console.ReadKey(true).Key != ConsoleKey.Enter)
+                Environment.Exit(0);
+            Console.Clear();
             Console.SetCursorPosition(GUI.left = 2, GUI.top = 4);
             return temp;
         }
@@ -88,7 +95,7 @@ namespace POSterminal
                         return 0;
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count++;
-                    BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), true);
+                    BounceHouse.MATH(houses, true);//BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), true);
                     GUI.MainFilling(houses, GUI.Menu, true);
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
                     continue;
@@ -98,8 +105,8 @@ namespace POSterminal
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     if (!flag)
                     {
-                        BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), false);
                         houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
+                        BounceHouse.MATH(houses, false);//BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), false);
                         GUI.MainFilling(houses, GUI.Menu, true);
                     }
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;

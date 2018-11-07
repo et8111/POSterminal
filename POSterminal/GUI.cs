@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace POSterminal
 {
-    static class GUI
+    public static class GUI
     {
         public static double Total { get; set; }
         public static int Quantity { get; set; }
@@ -103,7 +103,7 @@ namespace POSterminal
                 {
                 if (flag)
                 {
-                    MainFilling(houses, GUI.Menu, true);
+                    MainFilling(houses, Menu, true);
                     AddDescription(houses.Select(a => a).Where(b => b.Name == name[index]).ToList());
                 }
                 Console.SetCursorPosition(left, top);
