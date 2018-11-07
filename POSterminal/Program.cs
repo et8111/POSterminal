@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,7 @@ namespace POSterminal
                 Options.Add("CASH: $");
                 money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Cash", Options);
                 GUI.left = 2; GUI.top = 4; GUI.index = 0;
+                GUI.Total -= money;
             }
             else if (temp == 2)
             {
@@ -46,17 +48,28 @@ namespace POSterminal
                 Options.Add("CARD#: ");
                 Options.Add("CVV#: ");
                 Options.Add("EXPIRE: ");
-                money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Card", Options);
+                GUI.Selector2(GUI.left = 22, GUI.top = 4, "Card", Options);
+                GUI.Total = 0;
             }
-            GUI.Total -= money;
+            else if (temp == 3)
+            {
+                Options = new List<string>();
+                Options.Add("CHECK #: ");
+                GUI.Selector2(GUI.left = 22, GUI.top = 4, "Check", Options);
+                GUI.Total = 0;
+            }
             if (GUI.Total > 0)
                 Finalizer(list, menu);
             else if (GUI.Total <= 0)
             {
                 GUI.change = Math.Abs(GUI.Total);
+                RECIEPT(list);
                 GUI.Total = 0;
+                GUI.Quantity = 0;
+                for (int i = 0; i < list.Count; i++)
+                    list[i].Count = 0;
             }
-            Console.SetCursorPosition(0, 15);
+            Console.SetCursorPosition(GUI.left = 2, GUI.top = 4);
             return temp;
         }
 
@@ -71,6 +84,8 @@ namespace POSterminal
                 {
                     if (FinalFlag)
                         return -1;
+                    else if (flag)
+                        return 0;
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count++;
                     BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), true);
@@ -122,6 +137,23 @@ namespace POSterminal
                     }
                     continue;
                 }
+            }
+        }
+        public static void RECIEPT(List<BounceHouse> list)
+        {
+            double final = list.Select(a => a.Price + (a.Price * .06)).Sum();
+            using (StreamWriter writetext = new StreamWriter("OUT.txt"))
+            {
+                writetext.WriteLine("~Jump Around!-Jumbo Bounce House Emporium~");
+                writetext.WriteLine("==========================================");
+                for (int i = 0; i < list.Count; i++)
+                {
+                    writetext.WriteLine($"{list[i].Count + ")",-3}{list[i].Name.PadRight(27, '.')}{list[i].Price.ToString("C2").PadLeft(12, '.')}");
+                }
+                writetext.WriteLine($"{"Tax".PadRight(30, '.')}{list.Select(a => a.Price * .06).Sum().ToString("C2").PadLeft(12, '.')}");
+                writetext.WriteLine($"{"Total".PadRight(30, '.')}{final.ToString("C2").PadLeft(12, '.')}");
+                writetext.WriteLine($"{"Paid".PadRight(30, '.')}{(final+GUI.change).ToString("C2").PadLeft(12,'.')}");
+                writetext.WriteLine($"{"Change".PadRight(30,'.')}{GUI.change.ToString("C2").PadLeft(12, '.')}");
             }
         }
     }

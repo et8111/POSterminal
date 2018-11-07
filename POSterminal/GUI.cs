@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace POSterminal
 {
@@ -43,21 +44,54 @@ namespace POSterminal
             string tempWord = "";
             for (int i = 0; i < Options.Count; i++)
             {
-                Console.SetCursorPosition(left, top);
+            Ask1:
+                Console.SetCursorPosition(left, top+i);
                 Console.ForegroundColor = back;
                 Console.BackgroundColor = yellow;
                 Console.Write(Options[i]);
                 Console.ForegroundColor = current;
                 Console.BackgroundColor = back;
                 tempWord = Console.ReadLine();
-                if (flag == "Cash")
-                    double.TryParse(tempWord, out money);
-                else if (flag == "Card" && i == 0)
+                double.TryParse(tempWord, out money);
+                if (flag != "Cash")
+                    if (!Validation(Options, flag, i, tempWord))
+                        goto Ask1;
 
             }
             return money;
         }
-        public static Validation(List<string> Options)
+        public static bool Validation(List<string> Options, string flag, int i, string value)
+        {
+            if (flag == "Card")
+                switch(i)
+                {
+                    case 0:
+                        if (Regex.IsMatch(value, @"\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d\d"))
+                            return true;
+                        break;
+                    case 1:
+                        if (Regex.IsMatch(value, @"\d\d\d"))
+                            return true;
+                        break;
+                    case 2:
+                        if (Regex.IsMatch(value, @"\d\d\d\d"))
+                            return true;
+                        break;
+
+                }
+            if (flag == "Check")
+                switch(i)
+                {
+                    case 0:
+                        if (Regex.IsMatch(value, @"^[0-9]*$"))
+                            return true;
+                        break;
+                }
+            Console.SetCursorPosition(left + Options[i].Length,top+i);
+            Console.Write(" ".PadLeft(value.Length, ' '));
+            Console.SetCursorPosition(left + Options[i].Length,top+i);
+            return false;
+        }
         public static int Selector(int left, int top, int max, List<string> name, int index, bool flag, List<BounceHouse> houses)
         {
             ConsoleColor current = Console.ForegroundColor;
