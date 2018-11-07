@@ -226,7 +226,6 @@ namespace POSterminal
             Console.WriteLine($"{"INFO"}");
             Console.CursorLeft = 22;
             Console.Write("-".PadLeft(58, '-'));
-            //Console.SetCursorPosition(0, 15);
         }
 
         public static void ChangeSort(ref List<BounceHouse> houses)
