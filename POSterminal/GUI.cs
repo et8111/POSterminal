@@ -125,12 +125,12 @@ namespace POSterminal
                     index = (k.Key == ConsoleKey.DownArrow)?index+1: index-1;
                 }
             }
-            Console.SetCursorPosition(2, 19);
-            for (int i = 0; i < 6; i++)
-            {
-                Console.CursorLeft = 2;
-                Console.WriteLine($"{" ".PadLeft(80, ' ')}");
-            }
+            //Console.SetCursorPosition(2, 19);
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    Console.CursorLeft = 2;
+            //    Console.WriteLine($"{" ".PadLeft(80, ' ')}");
+            //}
             Console.ForegroundColor = current;
             Console.BackgroundColor = back;
             GUI.left = left;
