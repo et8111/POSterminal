@@ -17,6 +17,20 @@ namespace POSterminal
         public double Price { get; set; }
         public int Count { get; set; }
 
+        public static void MATH(List<BounceHouse> houses, bool flag)
+        {
+            if (flag)
+            {
+                GUI.Total += (houses[0].Price * .06) + houses[0].Price;
+                GUI.Quantity++;
+            }
+            else if(!flag && GUI.Quantity != 0 && houses[0].Count > 0)
+            {
+                GUI.Total -= (houses[0].Price * .06) + houses[0].Price;
+                GUI.Quantity--;
+            }
+        }
+
         public static List<BounceHouse> deSerialBounceHouse()
         {
             string fileName = @"C:\Users\jowiesny\source\repos\Midterm\POSterminal\POSterminal\bin\Debug\DATA.txt";

@@ -103,7 +103,7 @@ namespace POSterminal
             Console.SetCursorPosition(22, 3);
             Console.Write("-".PadLeft(58, '-'));
             Console.SetCursorPosition(22,17);
-            Console.Write($"{"QUANTITY:  0",-41}{"TOTAL: $0.00"}");
+            Console.Write($"{"QUANTITY: 0",-41}{"TOTAL: $0.00"}");
             Console.SetCursorPosition(0, 26);
         }
         public static void MainFilling(List<BounceHouse> list, List<string> menu)//MENU(2,4) | ListName(25,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
@@ -124,8 +124,23 @@ namespace POSterminal
                 Console.WriteLine($"{list[i].Count+")",-3}{list[i].Name.PadRight(30, '.')}{list[i].Category.PadLeft(11,'.')}{list[i].Price.ToString("C2").PadLeft(14,' ')}");
                 Console.CursorLeft = 22;
             }
-
+            Console.SetCursorPosition(32, 17);
+            Console.Write(Quantity);
+            Console.SetCursorPosition(70, 17);
+            Console.Write("            ");
+            Console.SetCursorPosition(70, 17);
+            Console.Write(Total.ToString("C2"));
             Console.SetCursorPosition(0, 26);
+        }
+
+        public static void FinalizeSkeleton()
+        {
+            Console.Clear();
+            char fill = (char)247;
+            Console.WriteLine(fill.ToString().PadLeft(83, fill));
+            for(int i = 0; i < 6; i++)
+                Console.WriteLine($"{fill,-20}{fill,-62}{fill}");
+            Console.WriteLine(fill.ToString().PadLeft(83, fill));
         }
 
         public static void ChangeSort(ref List<BounceHouse> houses)

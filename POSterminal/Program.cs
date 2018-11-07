@@ -29,10 +29,10 @@ namespace POSterminal
                 if (temp == 0)
                 {
                     if (flag)
-
                         return;
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count++;
+                    BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), true);
                     GUI.MainFilling(houses, GUI.Menu);
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
                     continue;
@@ -42,6 +42,7 @@ namespace POSterminal
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     if (!flag)
                     {
+                        BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), false);
                         houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
                         GUI.MainFilling(houses, GUI.Menu);
                     }
