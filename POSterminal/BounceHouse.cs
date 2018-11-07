@@ -30,10 +30,7 @@ namespace POSterminal
 
         public static void MATH(List<BounceHouse> houses, bool flag)
         {
-            if (flag)
-                GUI.Quantity = houses.Select(a => a.Count).Sum() + 1;
-            else if (!flag && GUI.Quantity != 0 && houses[0].Count > 0)
-                GUI.Quantity = houses.Select(a => a.Count).Sum() - 1;
+            GUI.Quantity = houses.Select(a => a.Count).Sum();
             GUI.Total = houses.Where(b => b.Count > 0).Select(a => (a.Price * 1.06) * a.Count).Sum();
         }
 

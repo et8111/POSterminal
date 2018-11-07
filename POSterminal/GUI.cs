@@ -143,6 +143,7 @@ namespace POSterminal
         public static void MainSkeleton()
         {
             char fill = (char)247;
+            Console.SetCursorPosition(0, 0);
             Console.WriteLine("                 ~Jump Around! - Jumbo Bounce House Emporium~");
             Console.CursorTop = 1;
             Console.WriteLine(fill.ToString().PadLeft(83, fill));

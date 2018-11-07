@@ -16,8 +16,6 @@ namespace POSterminal
             List<BounceHouse> houses = new List<BounceHouse>();
             houses = BounceHouse.deSerialBounceHouse();
             GUI.Menu = GUI.MenuMainLoadOut(GUI.Menu);
-            //GUI.MainSkeleton();
-            //GUI.MainFilling(houses, GUI.Menu, true);
             houses = houses.OrderBy(a => a.Name).ToList();
             program(houses, false,ref FinalFlag);
         }
@@ -50,6 +48,7 @@ namespace POSterminal
                 Options.Add("CVV#: ");
                 Options.Add("EXPIRE: ");
                 GUI.Selector2(GUI.left = 22, GUI.top = 4, "Card", Options);
+                GUI.left = 2; GUI.top = 4; GUI.index = 0;
                 GUI.Total = 0;
             }
             else if (temp == 3)
@@ -95,7 +94,7 @@ namespace POSterminal
                         return 0;
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count++;
-                    BounceHouse.MATH(houses, true);//BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), true);
+                    BounceHouse.MATH(houses, true);
                     GUI.MainFilling(houses, GUI.Menu, true);
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
                     continue;
@@ -105,8 +104,8 @@ namespace POSterminal
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     if (!flag)
                     {
-                        houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
-                        BounceHouse.MATH(houses, false);//BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), false);
+                         houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
+                        BounceHouse.MATH(houses, false);
                         GUI.MainFilling(houses, GUI.Menu, true);
                     }
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;

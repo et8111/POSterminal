@@ -12,8 +12,6 @@ namespace PosUnitTest
     [TestClass]
     public class UnitTest1
     {
-        //List<BounceHouse> t1 = new List<BounceHouse>();
-        //t1.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
         [TestMethod]
         public void MATHFunctionIncrementTest()
         {
