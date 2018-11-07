@@ -56,6 +56,7 @@ namespace POSterminal
                 Options = new List<string>();
                 Options.Add("CHECK #: ");
                 GUI.Selector2(GUI.left = 22, GUI.top = 4, "Check", Options);
+                GUI.left = 2; GUI.top = 4; GUI.index = 0;
                 GUI.Total = 0;
             }
             if (GUI.Total > 0)
@@ -147,7 +148,7 @@ namespace POSterminal
         }
         public static void RECIEPT(List<BounceHouse> list)
         {
-            double final = list.Select(a => a.Price + (a.Price * .06)).Sum();
+            double final = list.Select(a => (a.Price + (a.Price * .06))*a.Count).Sum();
             using (StreamWriter writetext = new StreamWriter("OUT.txt"))
             {
                 writetext.WriteLine("~Jump Around!-Jumbo Bounce House Emporium~");
@@ -156,7 +157,7 @@ namespace POSterminal
                 {
                     writetext.WriteLine($"{list[i].Count + ")",-3}{list[i].Name.PadRight(27, '.')}{list[i].Price.ToString("C2").PadLeft(12, '.')}");
                 }
-                writetext.WriteLine($"{"Tax".PadRight(30, '.')}{list.Select(a => a.Price * .06).Sum().ToString("C2").PadLeft(12, '.')}");
+                writetext.WriteLine($"{"Tax".PadRight(30, '.')}{list.Select(a => (a.Price * .06)*a.Count).Sum().ToString("C2").PadLeft(12, '.')}");
                 writetext.WriteLine($"{"Total".PadRight(30, '.')}{final.ToString("C2").PadLeft(12, '.')}");
                 writetext.WriteLine($"{"Paid".PadRight(30, '.')}{(final+GUI.change).ToString("C2").PadLeft(12,'.')}");
                 writetext.WriteLine($"{"Change".PadRight(30,'.')}{GUI.change.ToString("C2").PadLeft(12, '.')}");
