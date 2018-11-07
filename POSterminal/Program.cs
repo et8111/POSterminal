@@ -10,30 +10,71 @@ namespace POSterminal
     {
         static void Main(string[] args)
         {
+            bool FinalFlag = false;
             GUI.Sorter = "SORTER:NAME";
             List<BounceHouse> houses = new List<BounceHouse>();
             houses = BounceHouse.deSerialBounceHouse();
             GUI.Menu = GUI.MenuMainLoadOut(GUI.Menu);
             GUI.MainSkeleton();
             houses = houses.OrderBy(a => a.Name).ToList();
-            GUI.MainFilling(houses, GUI.Menu);
-            program(houses, false);
+            GUI.MainFilling(houses, GUI.Menu, true);
+            program(houses, false,ref FinalFlag);
         }
 
-        public static void program(List<BounceHouse> houses, bool flag)
+        public static int Finalizer(List<BounceHouse> list, List<string> menu)
+        {
+            List<string> Options;
+            double money = 0;
+            GUI.FinalizeSkeleton();
+            GUI.MenuFinalizeLoadOut(GUI.Menu);
+            GUI.MainFilling(list, menu, false);
+            int temp = GUI.Selector(GUI.left = 2, GUI.top = 4, GUI.Menu.Count - 1, GUI.Menu, 0, false, list);
+            if (temp == 0)
+            {
+                return temp;
+            }
+            else if (temp == 1)
+            {
+                Options = new List<string>();
+                Options.Add("CASH: $");
+                money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Cash", Options);
+                GUI.left = 2; GUI.top = 4; GUI.index = 0;
+            }
+            else if (temp == 2)
+            {
+                Options = new List<string>();
+                Options.Add("CARD#: ");
+                Options.Add("CVV#: ");
+                Options.Add("EXPIRE: ");
+                money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Card", Options);
+            }
+            GUI.Total -= money;
+            if (GUI.Total > 0)
+                Finalizer(list, menu);
+            else if (GUI.Total <= 0)
+            {
+                GUI.change = Math.Abs(GUI.Total);
+                GUI.Total = 0;
+            }
+            Console.SetCursorPosition(0, 15);
+            return temp;
+        }
+
+        public static int program(List<BounceHouse> houses, bool flag,ref bool FinalFlag)
         {
             while (true)
             {
-                GUI.MainFilling(houses, GUI.Menu);
+                GUI.MainSkeleton();
+                GUI.MainFilling(houses, GUI.Menu, true);
                 int temp = GUI.Selector(GUI.left, GUI.top, GUI.Menu.Count - 1, GUI.Menu, GUI.index, false, houses);
                 if (temp == 0)
                 {
-                    if (flag)
-                        return;
+                    if (FinalFlag)
+                        return -1;
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
                     houses[temp].Count++;
                     BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), true);
-                    GUI.MainFilling(houses, GUI.Menu);
+                    GUI.MainFilling(houses, GUI.Menu, true);
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
                     continue;
                 }
@@ -44,7 +85,7 @@ namespace POSterminal
                     {
                         BounceHouse.MATH(houses.Where(a => a.Name == houses[temp].Name).ToList(), false);
                         houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
-                        GUI.MainFilling(houses, GUI.Menu);
+                        GUI.MainFilling(houses, GUI.Menu, true);
                     }
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
                     continue;
@@ -65,8 +106,18 @@ namespace POSterminal
                             Console.WriteLine($"{" ",-3}{" ".PadRight(30, '.')}{" ".PadLeft(11, '.')}{" ".PadLeft(14, ' ')}");
                             Console.CursorLeft = 22;
                         }
-                        GUI.MainFilling(houses.Where(a => a.Count > 0).ToList(), GUI.Menu);
-                        program(houses.Where(a => a.Count > 0).ToList(), true);
+                        GUI.MainFilling(houses.Where(a => a.Count > 0).ToList(), GUI.Menu, true);
+                        if (!flag)
+                        {
+                            temp = program(houses.Where(a => a.Count > 0).ToList(), true, ref FinalFlag);
+                            if (temp == -1)
+                            return -1;
+                        }
+                        else
+                        {
+                            temp = Finalizer(houses, GUI.Menu);
+                            return 0;
+                        }
                         GUI.MenuMainLoadOut(GUI.Menu);
                     }
                     continue;

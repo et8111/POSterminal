@@ -10,6 +10,7 @@ namespace POSterminal
     {
         public static double Total { get; set; }
         public static int Quantity { get; set; }
+        public static double change { get; set; }
         public static List<string> Menu { get; set; } = new List<string>();
         public static string Sorter { get; set; }
         public static int left { get; set; } = 2;
@@ -33,7 +34,30 @@ namespace POSterminal
                 Console.WriteLine(houses[0].Description[i]);
             }
         }
+        public static double Selector2(int left, int top,string flag, List<string> Options)
+        {
+            double money = 0;
+            ConsoleColor current = Console.ForegroundColor;
+            ConsoleColor yellow = ConsoleColor.Yellow;
+            ConsoleColor back = Console.BackgroundColor;
+            string tempWord = "";
+            for (int i = 0; i < Options.Count; i++)
+            {
+                Console.SetCursorPosition(left, top);
+                Console.ForegroundColor = back;
+                Console.BackgroundColor = yellow;
+                Console.Write(Options[i]);
+                Console.ForegroundColor = current;
+                Console.BackgroundColor = back;
+                tempWord = Console.ReadLine();
+                if (flag == "Cash")
+                    double.TryParse(tempWord, out money);
+                else if (flag == "Card" && i == 0)
 
+            }
+            return money;
+        }
+        public static Validation(List<string> Options)
         public static int Selector(int left, int top, int max, List<string> name, int index, bool flag, List<BounceHouse> houses)
         {
             ConsoleColor current = Console.ForegroundColor;
@@ -45,7 +69,7 @@ namespace POSterminal
                 {
                 if (flag)
                 {
-                    MainFilling(houses, GUI.Menu);
+                    MainFilling(houses, GUI.Menu, true);
                     AddDescription(houses.Select(a => a).Where(b => b.Name == name[index]).ToList());
                 }
                 Console.SetCursorPosition(left, top);
@@ -106,10 +130,10 @@ namespace POSterminal
             Console.Write($"{"QUANTITY: 0",-41}{"TOTAL: $0.00"}");
             Console.SetCursorPosition(0, 26);
         }
-        public static void MainFilling(List<BounceHouse> list, List<string> menu)//MENU(2,4) | ListName(25,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
+        public static void MainFilling(List<BounceHouse> list, List<string> menu, bool flag)//MENU(2,4) | ListName(25,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
         {
             Console.SetCursorPosition(2, 4);
-            Menu[2] = Sorter;
+            Menu[2] = (flag)?Sorter: Menu[2] ;
             for (int i = 0; i < menu.Count; i++)
             {
                 Console.Write("                ");
@@ -117,7 +141,13 @@ namespace POSterminal
                 Console.WriteLine(menu[i]);
                 Console.CursorLeft = 2;
             }
-
+            if (flag)
+                MainFilling2(list, menu);
+            else
+                FinalFilling(list, menu);
+        }
+        public static void MainFilling2(List<BounceHouse> list, List<string> menu)
+        {
             Console.SetCursorPosition(22, 4);
             for(int i = 0; i < list.Count; i++)
             {
@@ -132,15 +162,39 @@ namespace POSterminal
             Console.Write(Total.ToString("C2"));
             Console.SetCursorPosition(0, 26);
         }
+        public static void FinalFilling(List<BounceHouse> houses, List<string> menu)
+        {
+            Console.SetCursorPosition(22, 7);
+            Console.Write($"{"QUANTITY: " + houses.Sum(a => a.Count) ,-41}{"TOTAL: $0.00"}");
+            Console.SetCursorPosition(32, 7);
+            Console.Write(Quantity);
+            Console.SetCursorPosition(70, 7);
+            Console.Write("            ");
+            Console.SetCursorPosition(70, 7);
+            Console.Write(Total.ToString("C2"));
+        }
 
         public static void FinalizeSkeleton()
         {
             Console.Clear();
             char fill = (char)247;
+            Console.WriteLine("                 ~Jump Around! - Jumbo Bounce House Emporium~");
             Console.WriteLine(fill.ToString().PadLeft(83, fill));
             for(int i = 0; i < 6; i++)
                 Console.WriteLine($"{fill,-20}{fill,-62}{fill}");
             Console.WriteLine(fill.ToString().PadLeft(83, fill));
+            Console.SetCursorPosition(2, 2);
+            Console.WriteLine("MENU:");
+            Console.SetCursorPosition(2, 3);
+            Console.Write("-".PadLeft(17, '-'));
+            Console.SetCursorPosition(22, 2);
+            Console.WriteLine($"{"INFO"}");
+            Console.CursorLeft = 22;
+            Console.Write("-".PadLeft(58, '-'));
+
+
+
+            Console.SetCursorPosition(0, 15);
         }
 
         public static void ChangeSort(ref List<BounceHouse> houses)
@@ -164,7 +218,7 @@ namespace POSterminal
                     houses = houses.OrderBy(a => a.Name).ToList();
                     break;
             }
-            MainFilling(houses, Menu);
+            MainFilling(houses, Menu, true);
         }
 
         public static List<string> MenuMainLoadOut(List<string> Menu)
@@ -183,6 +237,15 @@ namespace POSterminal
             Menu.Add("INFO");
             Menu.Add(Sorter);
             Menu.Add("CHECKOUT");
+            return Menu;
+        }
+        public static List<string> MenuFinalizeLoadOut(List<string>Menu)
+        {
+            Menu.Clear();
+            Menu.Add("CANCEL");
+            Menu.Add("CASH");
+            Menu.Add("CARD");
+            Menu.Add("CHECK");
             return Menu;
         }
     }
