@@ -132,7 +132,7 @@ namespace POSterminal
         }
         #endregion
 
-        #region menu filler(MainFilling), Bodyfilling(MainFilling2), and payment filling(FinalFIlling)
+        #region menu filler(MainFilling), Bodyfilling(MainFilling2), and payment filling(FinalFIlling), DescriptionBox(AddDescription)
         public static void MainFilling(List<BounceHouse> list, List<string> menu, bool flag)//MENU(2,4) | ListName(25,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
         {
             Console.SetCursorPosition(2, 4);
@@ -183,6 +183,23 @@ namespace POSterminal
             Console.SetCursorPosition(70, 7);
             Console.Write(Total.ToString("C2"));
         }
+        public static void AddDescription(List<BounceHouse> houses)
+        {
+            Console.SetCursorPosition(2, 21);
+            for (int i = 0; i < 6; i++)
+            {
+                Console.CursorLeft = 2;
+                Console.WriteLine($"{" ".PadLeft(80, ' ')}");
+            }
+            Console.SetCursorPosition(2, 21);
+            Console.WriteLine($"{houses[0].Name + " " + houses[0].SecondName,-55}{"CATEGROY: " + houses[0].Category,-21}\n");
+            for (int i = 0; i < houses[0].Description.Count; i++)
+            {
+                Console.CursorLeft = 2;
+                Console.WriteLine(houses[0].Description[i]);
+            }
+        }
+
         #endregion
         //adjust the sort option
         public static void ChangeSort(ref List<BounceHouse> houses)
@@ -207,23 +224,6 @@ namespace POSterminal
                     break;
             }
             MainFilling(houses, Menu, true);
-        }
-        //add the description of the current item
-        public static void AddDescription(List<BounceHouse> houses)
-        {
-            Console.SetCursorPosition(2, 21);
-            for (int i = 0; i < 6; i++)
-            {
-                Console.CursorLeft = 2;
-                Console.WriteLine($"{" ".PadLeft(80, ' ')}");
-            }
-            Console.SetCursorPosition(2, 21);
-            Console.WriteLine($"{houses[0].Name + " " + houses[0].SecondName,-55}{"CATEGROY: " + houses[0].Category,-21}\n");
-            for (int i = 0; i < houses[0].Description.Count; i++)
-            {
-                Console.CursorLeft = 2;
-                Console.WriteLine(houses[0].Description[i]);
-            }
         }
         //card and check validation
         public static bool Validation(List<string> Options, string flag, int i, string value)

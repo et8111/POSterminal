@@ -31,68 +31,6 @@ namespace POSterminal
             Console.Clear();
             Console.SetCursorPosition(GUI.left = 2, GUI.top = 4);
         }
-
-        //Payment Controller
-        public static int Finalizer(List<BounceHouse> list, List<string> menu, List<string> payment)
-        {
-            List<string> Options;
-            double money = 0;
-            GUI.FinalizeSkeleton();
-            GUI.MenuFinalizeLoadOut(GUI.Menu);
-            GUI.MainFilling(list, menu, false);
-            int temp = GUI.Selector(GUI.left = 2, GUI.top = 4, GUI.Menu.Count - 1, GUI.Menu, 0, false, list);
-            if (temp == 0)
-            {
-                GUI.Total = list.Select(a => a.Price + (a.Price * .06)).Sum();
-                return temp;
-            }
-            else if (temp == 1)
-            {
-                Options = new List<string>();
-                Options.Add("CASH: $");
-                money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Cash", Options);
-                payment.Add("Cash");
-                payment.Add(money.ToString("C2"));
-                GUI.left = 2; GUI.top = 4; GUI.index = 0;
-                GUI.Total -= money;
-            }
-            else if (temp == 2)
-            {
-                Options = new List<string>();
-                Options.Add("CARD#: ");
-                Options.Add("CVV#: ");
-                Options.Add("EXPIRE: ");
-                GUI.Selector2(GUI.left = 22, GUI.top = 4, "Card", Options);
-                payment.Add("Card");
-                payment.Add(GUI.Total.ToString("C2"));
-                GUI.left = 2; GUI.top = 4; GUI.index = 0;
-                GUI.Total = 0;
-            }
-            else if (temp == 3)
-            {
-                Options = new List<string>();
-                Options.Add("CHECK #: ");
-                GUI.Selector2(GUI.left = 22, GUI.top = 4, "Check", Options);
-                payment.Add("Check");
-                payment.Add(GUI.Total.ToString("C2"));
-
-                GUI.left = 2; GUI.top = 4; GUI.index = 0;
-                GUI.Total = 0;
-            }
-            if (GUI.Total > 0)
-                temp = Finalizer(list, menu, payment);
-            else if (GUI.Total <= 0)
-            {
-                GUI.change = Math.Abs(GUI.Total);
-                RECIEPT(list, payment);
-                GUI.Total = 0;
-                GUI.Quantity = 0;
-                for (int i = 0; i < list.Count; i++)
-                    list[i].Count = 0;
-                message();
-            }
-            return 1;
-        }
         //Programs main controller
         public static int program(List<BounceHouse> houses, bool flag,ref bool FinalFlag)
         {
@@ -160,6 +98,69 @@ namespace POSterminal
                 }
             }
         }
+
+        //Payment Controller
+        public static int Finalizer(List<BounceHouse> list, List<string> menu, List<string> payment)
+        {
+            List<string> Options;
+            double money = 0;
+            GUI.FinalizeSkeleton();
+            GUI.MenuFinalizeLoadOut(GUI.Menu);
+            GUI.MainFilling(list, menu, false);
+            int temp = GUI.Selector(GUI.left = 2, GUI.top = 4, GUI.Menu.Count - 1, GUI.Menu, 0, false, list);
+            if (temp == 0)
+            {
+                GUI.Total = list.Select(a => a.Price + (a.Price * .06)).Sum();
+                return temp;
+            }
+            else if (temp == 1)
+            {
+                Options = new List<string>();
+                Options.Add("CASH: $");
+                money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Cash", Options);
+                payment.Add("Cash");
+                payment.Add(money.ToString("C2"));
+                GUI.left = 2; GUI.top = 4; GUI.index = 0;
+                GUI.Total -= money;
+            }
+            else if (temp == 2)
+            {
+                Options = new List<string>();
+                Options.Add("CARD#: ");
+                Options.Add("CVV#: ");
+                Options.Add("EXPIRE: ");
+                GUI.Selector2(GUI.left = 22, GUI.top = 4, "Card", Options);
+                payment.Add("Card");
+                payment.Add(GUI.Total.ToString("C2"));
+                GUI.left = 2; GUI.top = 4; GUI.index = 0;
+                GUI.Total = 0;
+            }
+            else if (temp == 3)
+            {
+                Options = new List<string>();
+                Options.Add("CHECK #: ");
+                GUI.Selector2(GUI.left = 22, GUI.top = 4, "Check", Options);
+                payment.Add("Check");
+                payment.Add(GUI.Total.ToString("C2"));
+                GUI.left = 2; GUI.top = 4; GUI.index = 0;
+                GUI.Total = 0;
+            }
+            if (GUI.Total > 0)
+                temp = Finalizer(list, menu, payment);
+            else if (GUI.Total <= 0)
+            {
+                GUI.change = Math.Abs(GUI.Total);
+                RECIEPT(list, payment);
+                GUI.Total = 0;
+                GUI.Quantity = 0;
+                for (int i = 0; i < list.Count; i++)
+                    list[i].Count = 0;
+                message();
+            }
+            return 1;
+        }
+
+        //spit the reciept to OUT.txt in the bin/Debug file
         public static void RECIEPT(List<BounceHouse> list, List<string> payment)
         {
             double final = list.Select(a => (a.Price + (a.Price * .06))*a.Count).Sum();
