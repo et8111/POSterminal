@@ -113,6 +113,7 @@ namespace POSterminal
                 Options = new List<string>();
                 Options.Add("CASH: $");
                 money = GUI.Selector2(GUI.left = 22, GUI.top = 4, "Cash", Options);
+                money = (money < 0)? 0: money;
                 payment.Add("Cash");
                 payment.Add(money.ToString("C2"));
                 GUI.left = 2; GUI.top = 4; GUI.index = 0;
