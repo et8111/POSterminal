@@ -12,46 +12,48 @@ namespace PosUnitTest
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
-        public void MATHFunctionIncrementTest()
-        {
-            List<BounceHouse> testHouse = new List<BounceHouse>();
-            testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
-            BounceHouse.MATH(testHouse);
-            Assert.AreEqual(6, GUI.Quantity);
-        }
+        //Commenting out because after using them i refactered the MATH() function and no longer need them
 
-        [TestMethod]
-        public void MATHFunctionDecrementTest()
-        {
-            GUI.Quantity = 1;
-            List<BounceHouse> testHouse = new List<BounceHouse>();
-            testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
-            BounceHouse.MATH(testHouse);
-            Assert.AreEqual(4, GUI.Quantity);
-        }
+        //[TestMethod]
+        //public void MATHFunctionIncrementTest()
+        //{
+        //    List<BounceHouse> testHouse = new List<BounceHouse>();
+        //    testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
+        //    BounceHouse.MATH(testHouse);
+        //    Assert.AreEqual(6, GUI.Quantity);
+        //}
 
-        [TestMethod]
-        public void MATHFunctionMultiValueincrementTest()
-        {
-            GUI.Quantity = 1;
-            List<BounceHouse> testHouse = new List<BounceHouse>();
-            testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
-            testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
-            BounceHouse.MATH(testHouse);
-            Assert.AreEqual(12, GUI.Quantity);
-        }
+        //[TestMethod]
+        //public void MATHFunctionDecrementTest()
+        //{
+        //    GUI.Quantity = 1;
+        //    List<BounceHouse> testHouse = new List<BounceHouse>();
+        //    testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
+        //    BounceHouse.MATH(testHouse);
+        //    Assert.AreEqual(4, GUI.Quantity);
+        //}
 
-        [TestMethod]
-        public void MATHFunctionMultiValueDecrementTest()
-        {
-            GUI.Quantity = 1;
-            List<BounceHouse> testHouse = new List<BounceHouse>();
-            testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
-            testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
-            BounceHouse.MATH(testHouse);
-            Assert.AreEqual(10, GUI.Quantity);
-        }
+        //[TestMethod]
+        //public void MATHFunctionMultiValueincrementTest()
+        //{
+        //    GUI.Quantity = 1;
+        //    List<BounceHouse> testHouse = new List<BounceHouse>();
+        //    testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
+        //    testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
+        //    BounceHouse.MATH(testHouse);
+        //    Assert.AreEqual(12, GUI.Quantity);
+        //}
+
+        //[TestMethod]
+        //public void MATHFunctionMultiValueDecrementTest()
+        //{
+        //    GUI.Quantity = 1;
+        //    List<BounceHouse> testHouse = new List<BounceHouse>();
+        //    testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
+        //    testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
+        //    BounceHouse.MATH(testHouse);
+        //    Assert.AreEqual(10, GUI.Quantity);
+        //}
 
         [TestMethod]
         public void MATHFunctionTaxIncrementTest()

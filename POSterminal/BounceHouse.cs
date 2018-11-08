@@ -46,6 +46,8 @@ namespace POSterminal
             }
             return players;
         }
+        //strictly for serializing the content to a .txt file not neccessary to run
+
         //string fileName = @"C:\Users\jowiesny\source\repos\Midterm\POSterminal\POSterminal\bin\Debug\DATA.txt";
         //public static void Serialize(List<BounceHouse> player)
         //{

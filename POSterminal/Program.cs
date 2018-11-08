@@ -20,6 +20,7 @@ namespace POSterminal
             houses = houses.OrderBy(a => a.Name).ToList();
             program(houses, false,ref FinalFlag);
         }
+        //exit or restart
         public static void message()
         {
             Console.Clear();
@@ -30,6 +31,8 @@ namespace POSterminal
             Console.Clear();
             Console.SetCursorPosition(GUI.left = 2, GUI.top = 4);
         }
+
+        //Payment Controller
         public static int Finalizer(List<BounceHouse> list, List<string> menu, List<string> payment)
         {
             List<string> Options;
@@ -90,7 +93,7 @@ namespace POSterminal
             }
             return 1;
         }
-
+        //Programs main controller
         public static int program(List<BounceHouse> houses, bool flag,ref bool FinalFlag)
         {
             while (true)
