@@ -121,7 +121,7 @@ namespace POSterminal
             }
             else if (temp == 2)
             {
-                Options = new List<string>();
+                Options = new List<string>();                               //reqires 19 number2
                 Options.Add("CARD#: ");
                 Options.Add("CVV#: ");
                 Options.Add("EXPIRE: ");
