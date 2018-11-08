@@ -65,7 +65,7 @@ namespace POSterminal
         }
         #endregion
 
-        #region Highlight Controler for main(selector1) and payment option(selector2)
+        #region Highlight Controller for main(selector1) and payment option(selector2)
         public static double Selector2(int left, int top,string flag, List<string> Options)
         {
             double money = 0;
@@ -73,7 +73,7 @@ namespace POSterminal
             ConsoleColor yellow = ConsoleColor.Yellow;
             ConsoleColor back = Console.BackgroundColor;
             string tempWord = "";
-            for (int i = 0; i < Options.Count; i++)
+            for (int i = 0; i < Options.Count; i++)//card has 3 options, cash has 1
             {
             Ask1:
                 Console.SetCursorPosition(left, top+i);
@@ -103,20 +103,19 @@ namespace POSterminal
                     MainFilling(houses, Menu, true);
                     AddDescription(houses.Select(a => a).Where(b => b.Name == name[index]).ToList());
                 }
-                Console.SetCursorPosition(left, top);
-                Console.ForegroundColor = back;
-                Console.BackgroundColor = yellow;
-                Console.Write(name[index]);
+                Console.SetCursorPosition(left, top);       //fancy color
+                Console.ForegroundColor = back;             //
+                Console.BackgroundColor = yellow;           //
+                Console.Write(name[index]);                 //
 
-                Console.ForegroundColor = current;
-                Console.BackgroundColor = back;
-                k = Console.ReadKey(true);
-                Console.SetCursorPosition(left, top);
-                if (k.Key == ConsoleKey.Enter)
+                Console.ForegroundColor = current;          //set color back
+                Console.BackgroundColor = back;             //
+                k = Console.ReadKey(true);                  //wait for user
+                Console.SetCursorPosition(left, top);       //
+                if (k.Key == ConsoleKey.Enter)              //
                     break;
                 else if ((k.Key == ConsoleKey.UpArrow && index != 0) || (k.Key == ConsoleKey.DownArrow && index != max))
                 {
- 
                     Console.Write(name[index]);
                     top = (k.Key == ConsoleKey.DownArrow) ? top + 1 : top - 1; ;
                     index = (k.Key == ConsoleKey.DownArrow)?index+1: index-1;
@@ -133,7 +132,7 @@ namespace POSterminal
         #endregion
 
         #region menu filler(MainFilling), Bodyfilling(MainFilling2), and payment filling(FinalFIlling), DescriptionBox(AddDescription)
-        public static void MainFilling(List<BounceHouse> list, List<string> menu, bool flag)//MENU(2,4) | ListName(25,4) | listCate(50,4) | ListPrice(66,4) | Quantity(32,17) | Total(46,17)
+        public static void MainFilling(List<BounceHouse> list, List<string> menu, bool flag)
         {
             Console.SetCursorPosition(2, 4);
             Menu[2] = (flag)?Sorter: Menu[2] ;
@@ -185,7 +184,7 @@ namespace POSterminal
         }
         public static void AddDescription(List<BounceHouse> houses)
         {
-            Console.SetCursorPosition(2, 21);
+            Console.CursorTop = 21;
             for (int i = 0; i < 6; i++)
             {
                 Console.CursorLeft = 2;

@@ -12,13 +12,12 @@ namespace POSterminal
         static void Main(string[] args)
         {
             //System.Media.SoundPlayer();
-            bool FinalFlag = false;
             GUI.Sorter = "SORTER:NAME";
             List<BounceHouse> houses = new List<BounceHouse>();
             houses = BounceHouse.deSerialBounceHouse();
             GUI.Menu = GUI.MenuMainLoadOut(GUI.Menu);
             houses = houses.OrderBy(a => a.Name).ToList();
-            program(houses, false,ref FinalFlag);
+            program(houses, false);
         }
         //exit or restart
         public static void message()
@@ -32,22 +31,20 @@ namespace POSterminal
             Console.SetCursorPosition(GUI.left = 2, GUI.top = 4);
         }
         //Programs main controller
-        public static int program(List<BounceHouse> houses, bool flag,ref bool FinalFlag)
+        public static int program(List<BounceHouse> houses, bool flag)
         {
             while (true)
             {
-                GUI.MainSkeleton();
-                GUI.MainFilling(houses, GUI.Menu, true);
+                GUI.MainSkeleton();                                                         //set up screen
+                GUI.MainFilling(houses, GUI.Menu, true);                                    //
                 int temp = GUI.Selector(GUI.left, GUI.top, GUI.Menu.Count - 1, GUI.Menu, GUI.index, false, houses);
                 if (temp == 0)
                 {
-                    if (FinalFlag)
-                        return -1;
-                    else if (flag)
+                    if (flag)
                         return 0;
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
-                    houses[temp].Count++;
-                    BounceHouse.MATH(houses);
+                    houses[temp].Count++;                       //
+                    BounceHouse.MATH(houses);                   //Enter MATH() with new count triggers the change in math got GUI.total/GUI.Quantity
                     GUI.MainFilling(houses, GUI.Menu, true);
                     GUI.left = 2; GUI.top = 4; GUI.index = 0;
                     continue;
@@ -55,9 +52,9 @@ namespace POSterminal
                 if (temp == 1)
                 {
                     temp = GUI.Selector(GUI.left = 25, GUI.top = 4, houses.Count - 1, houses.Select(a => a.Name).ToList(), 0, true, houses);
-                    if (!flag)
+                    if (!flag)                                  //flag means the first menu in main (add,remove,sort,cart)
                     {
-                         houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
+                        houses[temp].Count = (houses[temp].Count > 0) ? houses[temp].Count - 1 : houses[temp].Count;
                         BounceHouse.MATH(houses);
                         GUI.MainFilling(houses, GUI.Menu, true);
                     }
@@ -83,9 +80,7 @@ namespace POSterminal
                         GUI.MainFilling(houses.Where(a => a.Count > 0).ToList(), GUI.Menu, true);
                         if (!flag)
                         {
-                            temp = program(houses.Where(a => a.Count > 0).ToList(), true, ref FinalFlag);
-                            if (temp == -1)
-                            return -1;
+                            temp = program(houses.Where(a => a.Count > 0).ToList(), true);
                         }
                         else
                         {
@@ -102,13 +97,13 @@ namespace POSterminal
         //Payment Controller
         public static int Finalizer(List<BounceHouse> list, List<string> menu, List<string> payment)
         {
-            List<string> Options;
-            double money = 0;
-            GUI.FinalizeSkeleton();
-            GUI.MenuFinalizeLoadOut(GUI.Menu);
-            GUI.MainFilling(list, menu, false);
-            int temp = GUI.Selector(GUI.left = 2, GUI.top = 4, GUI.Menu.Count - 1, GUI.Menu, 0, false, list);
-            if (temp == 0)
+            List<string> Options;                                                                               //reset any information
+            double money = 0;                                                                                   //
+            GUI.FinalizeSkeleton();                                                                             //
+            GUI.MenuFinalizeLoadOut(GUI.Menu);                                                                  //
+            GUI.MainFilling(list, menu, false);                                                                 //
+            int temp = GUI.Selector(GUI.left = 2, GUI.top = 4, GUI.Menu.Count - 1, GUI.Menu, 0, false, list);   //select an option in temp
+            if (temp == 0)                                                                  
             {
                 GUI.Total = list.Select(a => a.Price + (a.Price * .06)).Sum();
                 return temp;
