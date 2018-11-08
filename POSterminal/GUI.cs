@@ -21,13 +21,13 @@ namespace POSterminal
 
         public static void AddDescription(List<BounceHouse> houses)
         {
-            Console.SetCursorPosition(2, 19);
+            Console.SetCursorPosition(2, 21);
             for (int i = 0; i < 6; i++)
             {
                 Console.CursorLeft = 2;
                 Console.WriteLine($"{" ".PadLeft(80, ' ')}");
             }
-            Console.SetCursorPosition(2, 19);
+            Console.SetCursorPosition(2, 21);
             Console.WriteLine($"{houses[0].Name + " "+ houses[0].SecondName, -55}{"CATEGROY: " + houses[0].Category, -21}\n");
             for (int i = 0; i < houses[0].Description.Count; i++)
             {
@@ -141,7 +141,7 @@ namespace POSterminal
             Console.WriteLine("                 ~Jump Around! - Jumbo Bounce House Emporium~");
             Console.CursorTop = 1;
             Console.WriteLine(fill.ToString().PadLeft(83, fill));
-            for(int i = 0; i < 16; i++)
+            for(int i = 0; i < 18; i++)
                 Console.WriteLine($"{fill,-20}{fill,-62}{fill}");
             Console.WriteLine(fill.ToString().PadLeft(83, fill));
             for (int i = 0; i < 6; i++)
@@ -155,7 +155,7 @@ namespace POSterminal
             Console.WriteLine($"{"#)",-3}{"ITEMS:", -30}{"CATEGORY:",-15}{"PRICE:",10}");
             Console.SetCursorPosition(22, 3);
             Console.Write("-".PadLeft(58, '-'));
-            Console.SetCursorPosition(22,17);
+            Console.SetCursorPosition(22,19);
             Console.Write($"{"QUANTITY: 0",-41}{"TOTAL: $0.00"}");
             Console.SetCursorPosition(0, 26);
         }
@@ -178,16 +178,23 @@ namespace POSterminal
         public static void MainFilling2(List<BounceHouse> list, List<string> menu)
         {
             Console.SetCursorPosition(22, 4);
-            for(int i = 0; i < list.Count; i++)
+            for (int i = 0; i < list.Count; i++)
             {
-                Console.WriteLine($"{list[i].Count+")",-3}{list[i].Name.PadRight(30, '.')}{list[i].Category.PadLeft(11,'.')}{list[i].Price.ToString("C2").PadLeft(14,' ')}");
+                Console.WriteLine($"{list[i].Count + ")",-3}{list[i].Name.PadRight(30, '.')}{list[i].Category.PadLeft(11, '.')}{list[i].Price.ToString("C2").PadLeft(14, ' ')}");
                 Console.CursorLeft = 22;
             }
-            Console.SetCursorPosition(32, 17);
+            if (Menu[3] == "CHECKOUT")
+            {
+                Console.CursorLeft = 22;
+                Console.WriteLine($"{Quantity + ")",-3}{"SUBTOTAL".PadRight(30, '.')}{" ".PadLeft(11, '.')}{list.Sum(a => a.Price * a.Count).ToString("C2").PadLeft(14, ' ')}");
+                Console.CursorLeft = 22;
+                Console.WriteLine($"{Quantity + ")",-3}{"TAX".PadRight(30, '.')}{" ".PadLeft(11, '.')}{list.Sum(a => (a.Price * .06) * a.Count).ToString("C2").PadLeft(14, ' ')}");
+            }
+            Console.SetCursorPosition(32, 19);
             Console.Write(Quantity);
-            Console.SetCursorPosition(70, 17);
+            Console.SetCursorPosition(70, 19);
             Console.Write("            ");
-            Console.SetCursorPosition(70, 17);
+            Console.SetCursorPosition(70, 19);
             Console.Write(Total.ToString("C2"));
             Console.SetCursorPosition(0, 26);
         }

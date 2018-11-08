@@ -28,7 +28,7 @@ namespace POSterminal
             Count = count;
         }
 
-        public static void MATH(List<BounceHouse> houses, bool flag)
+        public static void MATH(List<BounceHouse> houses)
         {
             GUI.Quantity = houses.Select(a => a.Count).Sum();
             GUI.Total = houses.Where(b => b.Count > 0).Select(a => (a.Price * 1.06) * a.Count).Sum();

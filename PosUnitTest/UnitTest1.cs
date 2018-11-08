@@ -17,7 +17,7 @@ namespace PosUnitTest
         {
             List<BounceHouse> testHouse = new List<BounceHouse>();
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
-            BounceHouse.MATH(testHouse, true);
+            BounceHouse.MATH(testHouse);
             Assert.AreEqual(6, GUI.Quantity);
         }
 
@@ -27,7 +27,7 @@ namespace PosUnitTest
             GUI.Quantity = 1;
             List<BounceHouse> testHouse = new List<BounceHouse>();
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
-            BounceHouse.MATH(testHouse, false);
+            BounceHouse.MATH(testHouse);
             Assert.AreEqual(4, GUI.Quantity);
         }
 
@@ -38,7 +38,7 @@ namespace PosUnitTest
             List<BounceHouse> testHouse = new List<BounceHouse>();
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
-            BounceHouse.MATH(testHouse, true);
+            BounceHouse.MATH(testHouse);
             Assert.AreEqual(12, GUI.Quantity);
         }
 
@@ -49,7 +49,7 @@ namespace PosUnitTest
             List<BounceHouse> testHouse = new List<BounceHouse>();
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 5));
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 6));
-            BounceHouse.MATH(testHouse, false);
+            BounceHouse.MATH(testHouse);
             Assert.AreEqual(10, GUI.Quantity);
         }
 
@@ -60,7 +60,7 @@ namespace PosUnitTest
             List<BounceHouse> testHouse = new List<BounceHouse>();
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 1));
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 1));
-            BounceHouse.MATH(testHouse, true);
+            BounceHouse.MATH(testHouse);
             Assert.AreEqual(2120.02, Math.Round(GUI.Total,2));
         }
 
@@ -72,7 +72,7 @@ namespace PosUnitTest
             List<BounceHouse> testHouse = new List<BounceHouse>();
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 0));
             testHouse.Add(new BounceHouse("test1", "", "", "", 1000.01, 1));
-            BounceHouse.MATH(testHouse, false);
+            BounceHouse.MATH(testHouse);
             Assert.AreEqual(1060.01, Math.Round(GUI.Total, 2));
         }
     }
